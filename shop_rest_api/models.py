@@ -35,7 +35,6 @@ class Production(CommonInfo):
 
     business = models.ForeignKey(UserProfile, related_name='production')
     instruction = models.CharField(max_length=200)
-    image = models.ImageField()
     recommend_times = models.IntegerField(default=3)
     status = models.CharField(choices=STATUS, max_length=10)
     create_time = models.DateTimeField(auto_now_add=True)
@@ -43,6 +42,11 @@ class Production(CommonInfo):
 
     class Meta:
         ordering = ('-update_time',)
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='./')
+    production = models.ForeignKey(Production, related_name='image')
 
 
 class Comment(models.Model):

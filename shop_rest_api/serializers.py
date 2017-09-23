@@ -10,8 +10,15 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('production', 'content', 'user', 'create_time', 'extra')
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('id', 'image', 'production')
+
+
 class ProductionSerializer(serializers.ModelSerializer):
     comment = CommentSerializer(many=True, read_only=True)
+    image = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Production
@@ -19,6 +26,24 @@ class ProductionSerializer(serializers.ModelSerializer):
             'id', 'name', 'business', 'instruction', 'image', 'recommend_times',
             'status', 'create_time', 'update_time', 'extra', 'comment'
         )
+
+
+class FileListSerializer(serializers.Serializer):
+    def update(self, instance, validated_data):
+        pass
+
+    image = serializers.ListField(
+        child=serializers.FileField(max_length=100000,
+                                    allow_empty_file=False,
+                                    use_url=True)
+    )
+
+    def create(self, validated_data):
+        production = Production.objects.get(pk=self.initial_data.get('production'))
+        images = validated_data.pop('image')
+        for img in images:
+            image = Image.objects.create(image=img, production=production, **validated_data)
+        return image
 
 
 class ProfileSerializer(serializers.ModelSerializer):

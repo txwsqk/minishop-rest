@@ -89,9 +89,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'minishop',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'USER': 'minishop',
+        'PASSWORD': 'minishop_0916',
+        'HOST': '192.168.1.107',
         'PORT': '3306',
     }
 }
@@ -135,5 +135,5 @@ LOGIN_REDIRECT_URL = '/api/'
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
-MEDIA_ROOT = '/tmp/minishop'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, os.pardir, 'media')

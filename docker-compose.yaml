@@ -8,7 +8,7 @@ services:
       - "3306:3306"
     environment:
        MYSQL_ROOT_HOST: 0.0.0.0
-       MYSQL_ROOT_PASSWORD: minishop_root_password
+       MYSQL_ROOT_PASSWORD: minishop
        MYSQL_DATABASE: minishop
-       MYSQL_USER: minishop_user
-       MYSQL_PASSWORD: minishop_password
+       MYSQL_USER: minishop
+       MYSQL_PASSWORD: minishop_0916

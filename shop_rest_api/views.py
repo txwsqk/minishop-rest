@@ -5,10 +5,12 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
 
 from shop_rest_api.serializers import *
 
@@ -18,21 +20,26 @@ class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
 
+class ImageViewSet(viewsets.ModelViewSet):
+    serializer_class = FileListSerializer
+    queryset = Image.objects.all()
+    parser_classes = (MultiPartParser, FormParser,)
+
+    def list(self, request):
+        queryset = Image.objects.all()
+        serializer = ImageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Image.objects.all()
+        image = get_object_or_404(queryset, pk=pk)
+        serializer = ImageSerializer(image)
+        return Response(serializer.data)
+
+
 class ProductionViewSet(viewsets.ModelViewSet):
     serializer_class = ProductionSerializer
     queryset = Production.objects.all()
-    parser_classes = (MultiPartParser, FormParser,)
-
-    def perform_create(self, serializer):
-        serializer.save(
-            business=UserProfile.objects.get(pk=self.request.data.get('business')),
-            instruction=self.request.data.get('instruction'),
-            image=self.request.data.get('image'),
-            recommend_times=self.request.data.get('recommend_times'),
-            status=self.request.data.get('status'),
-            create_time=self.request.data.get('create_time'),
-            update_time=self.request.data.get('update_time'),
-        )
 
 
 class CommentViewSet(viewsets.ModelViewSet):

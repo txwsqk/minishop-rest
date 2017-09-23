@@ -20,10 +20,14 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Production)
 class ProductionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'instruction', 'image', 'business', 'recommend_times', 'status')
+    list_display = ('id', 'name', 'instruction', 'business', 'recommend_times', 'status')
 
 
 @admin.register(Comment)
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ('id', 'production', 'content', 'user', 'create_time', 'extra')
 
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'image', 'production')
