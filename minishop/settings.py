@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'minishop',
         'USER': 'minishop',
         'PASSWORD': 'minishop_0916',
-        'HOST': '192.168.1.107',
+        'HOST': '172.17.2.30',
         'PORT': '3306',
     }
 }

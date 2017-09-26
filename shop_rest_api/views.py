@@ -58,7 +58,11 @@ def login_view(request):
         if user.is_active:
             login(request, user)
             return JsonResponse(
-                dict(login=True, uid=user.id, username=user.username, detail='User is valid, active and authenticated'))
+                dict(login=True, uid=user.id, username=user.username,
+                     address=user.profile.address, phone=user.profile.phone,
+                     is_business=user.profile.is_business,
+                     is_customer=user.profile.is_customer,
+                     detail='User is valid, active and authenticated'))
         else:
             return JsonResponse(dict(login=False, detail='The password is valid, but the account has been disabled!'))
     else:
